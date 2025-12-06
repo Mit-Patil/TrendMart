@@ -1,0 +1,74 @@
+.orders-page h2 {
+    font-weight: 600;
+    color: #333;
+}
+
+.order-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.order-card:hover {
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: translateY(-2px);
+}
+
+.order-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.order-col {
+    flex: 1;
+    min-width: 100px;
+    padding: 5px 10px;
+}
+
+.order-col p.label {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.order-col p.value {
+    margin: 0;
+    font-weight: 500;
+    font-size: 1rem;
+    color: #333;
+}
+
+.order-status {
+    padding: 5px 10px;
+    border-radius: 12px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.order-status.delivered { background-color: #28a745; }
+.order-status.shipped { background-color: #17a2b8; }
+.order-status.processing { background-color: #ffc107; color: #333; }
+.order-status.canceled { background-color: #dc3545; }
+.order-status.unknown { background-color: #6c757d; }
+
+.total-amount {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #007bff;
+}
+
+.no-orders h2 {
+    font-weight: 600;
+    color: #555;
+}
+
+.no-orders p {
+    color: #666;
+}

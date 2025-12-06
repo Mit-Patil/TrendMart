@@ -1,0 +1,18 @@
+# React Ignore
+frontend/trendmart-frontend/node_modules/
+frontend/trendmart-frontend/build/
+frontend/trendmart-frontend/.env
+
+# .NET Ignore
+backend/Trendmart_Api1/bin/
+backend/Trendmart_Api1/obj/
+backend/Trendmart_Api1/appsettings.json
+backend/TrendMart_Api1/.vs/
+
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

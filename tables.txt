@@ -1,0 +1,168 @@
+-- Users Table
+CREATE TABLE Users (
+    UserID INT IDENTITY(1,1) PRIMARY KEY,
+    FirstName VARCHAR(50) NOT NULL,
+    LastName VARCHAR(50) NOT NULL,
+    Email VARCHAR(100) NOT NULL UNIQUE,
+    PasswordHash VARCHAR(255) NOT NULL,
+    Phone VARCHAR(20),
+    Role VARCHAR(30) DEFAULT 'Customer',
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    LastLogin DATETIME
+);
+
+-- UserProfiles Table
+CREATE TABLE UserProfiles (
+    ProfileID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT UNIQUE FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+    ProfilePictureUrl NVARCHAR(255),
+    DateOfBirth DATE,
+    Gender VARCHAR(10),
+    Bio NVARCHAR(500),
+    SocialLinks NVARCHAR(1000),
+    UpdatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- UserAddresses Table
+CREATE TABLE UserAddresses (
+    AddressID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+    FullName VARCHAR(100),
+    Phone VARCHAR(20),
+    AddressLine1 VARCHAR(255),
+    AddressLine2 VARCHAR(255),
+    City VARCHAR(100),
+    State VARCHAR(100),
+    PostalCode VARCHAR(20),
+    Country VARCHAR(50) DEFAULT 'India',
+    IsDefault BIT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- Categories Table
+CREATE TABLE Categories (
+    CategoryID INT IDENTITY(1,1) PRIMARY KEY,
+    CategoryName VARCHAR(50) NOT NULL UNIQUE,
+    Description TEXT
+);
+
+-- Products Table
+CREATE TABLE Products (
+    ProductID INT IDENTITY(1,1) PRIMARY KEY,
+    Name VARCHAR(100) NOT NULL,
+    Description TEXT,
+    Price DECIMAL(10,2) NOT NULL,
+    CategoryID INT FOREIGN KEY REFERENCES Categories(CategoryID) ON DELETE NO ACTION,
+    Brand NVARCHAR(100),
+    SellerID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE NO ACTION,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- ProductImages Table
+CREATE TABLE ProductImages (
+    ImageID INT IDENTITY(1,1) PRIMARY KEY,
+    ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+    ImageURL NVARCHAR(500) NOT NULL
+);
+
+------ProductVariants Table
+CREATE TABLE ProductVariants (
+    VariantID INT IDENTITY(1,1) PRIMARY KEY,
+    ProductID INT NOT NULL FOREIGN KEY REFERENCES Products(ProductID) ON DELETE CASCADE,
+    Gender VARCHAR(10) NOT NULL DEFAULT 'Unisex',
+    Size VARCHAR(20) NOT NULL,
+    Color VARCHAR(50) NOT NULL,
+    Stock INT DEFAULT 0,
+    CreatedAt DATETIME DEFAULT GETDATE()
+);
+
+
+-- Orders Table
+CREATE TABLE Orders (
+    OrderID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+    OrderDate DATETIME DEFAULT GETDATE(),
+    TotalAmount DECIMAL(10,2) NOT NULL,
+    Status VARCHAR(20) DEFAULT 'Pending',
+    PaymentStatus VARCHAR(20) DEFAULT 'Unpaid',
+    AddressID INT FOREIGN KEY REFERENCES UserAddresses(AddressID) ON DELETE NO ACTION
+);
+
+-- OrderItems Table
+CREATE TABLE OrderItems (
+    OrderItemID INT IDENTITY(1,1) PRIMARY KEY,
+    OrderID INT FOREIGN KEY REFERENCES Orders(OrderID) ON DELETE CASCADE,
+    VariantID INT NOT NULL FOREIGN KEY REFERENCES ProductVariants(VariantID) ON DELETE NO ACTION,
+    Quantity INT NOT NULL,
+    Price DECIMAL(10,2) NOT NULL
+);
+
+-- Payments Table
+CREATE TABLE Payments (
+    PaymentID INT IDENTITY(1,1) PRIMARY KEY,
+    OrderID INT FOREIGN KEY REFERENCES Orders(OrderID) ON DELETE CASCADE,
+    PaymentMethod VARCHAR(50) NOT NULL,
+    Amount DECIMAL(10,2) NOT NULL,
+    PaymentDate DATETIME DEFAULT GETDATE(),
+    Status VARCHAR(20) DEFAULT 'Success'
+);
+
+-- Reviews Table
+CREATE TABLE Reviews (
+    ReviewID INT IDENTITY(1,1) PRIMARY KEY,
+    ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE NO ACTION,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+    Rating INT CHECK(Rating BETWEEN 1 AND 5),
+    Comment TEXT,
+    ReviewDate DATETIME DEFAULT GETDATE()
+);
+
+-- Wishlist Table
+CREATE TABLE Wishlist (
+    WishlistID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+    ProductID INT FOREIGN KEY REFERENCES Products(ProductID) ON DELETE NO ACTION
+);
+
+-- Cart Table
+CREATE TABLE Cart (
+    CartID INT IDENTITY(1,1) PRIMARY KEY,
+    UserID INT NOT NULL FOREIGN KEY REFERENCES Users(UserID) ON DELETE CASCADE,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    UpdatedAt DATETIME DEFAULT GETDATE()
+);
+
+-- CartItems Table
+CREATE TABLE CartItems (
+    CartItemID INT IDENTITY(1,1) PRIMARY KEY,
+    CartID INT NOT NULL FOREIGN KEY REFERENCES Cart(CartID) ON DELETE CASCADE,
+    VariantID INT NOT NULL FOREIGN KEY REFERENCES ProductVariants(VariantID) ON DELETE NO ACTION,
+    Quantity INT NOT NULL,
+    AddedAt DATETIME DEFAULT GETDATE()
+);
+
+
+
+
+
+
+----------------------------------------------------------------------------
+
+-------That Is My Command I Used in My Project
+Scaffold-DbContext "Server=LAPTOP-LVRRQ255\SQLEXPRESS;Database=TrendMartDB;Trusted_Connection=True;TrustServerCertificate=True;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context Mydbcontext
+
+
+
+Scaffold-DbContext "Your Database Connection Sring" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -Context Mydbcontext
+
+
+--------Not Used In Project
+----RefreshTokens table
+CREATE TABLE RefreshTokens (
+    TokenID INT PRIMARY KEY IDENTITY,
+    UserID INT FOREIGN KEY REFERENCES Users(UserID),
+    Token VARCHAR(500),
+    ExpiresAt DATETIME,
+    CreatedAt DATETIME DEFAULT GETDATE(),
+    RevokedAt DATETIME NULL
+);

@@ -1,0 +1,220 @@
+/* CartDisplay.css */
+
+/* --- General Layout --- */
+.cart-page {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cart-page h2 {
+    font-size: 2em;
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+/* --- State Messages (Loading, Error, Empty) --- */
+.loading, .empty-cart {
+    text-align: center;
+    padding: 50px 20px;
+    font-size: 1.2em;
+    color: #666;
+}
+
+.error {
+    text-align: center;
+    padding: 20px;
+    background-color: #fcebeb;
+    color: #cc0000;
+    border: 1px solid #cc0000;
+    border-radius: 4px;
+}
+
+/* --- Cart Items List --- */
+.cart-items {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cart-item-row {
+    display: grid;
+    /* Defines columns for Item Details, Quantity Controls, and Subtotal/Remove */
+    grid-template-columns: 2fr 1fr 1fr; 
+    align-items: center;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.cart-item-row:last-child {
+    border-bottom: none;
+}
+
+/* Item Details */
+.cart-item-row strong {
+    font-size: 1.1em;
+    color: #007bff; /* Primary product color */
+    display: block;
+    margin-bottom: 5px;
+}
+.cart-item-row p {
+    margin: 0;
+    color: #666;
+}
+
+/* --- Quantity Controls --- */
+.quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.quantity-controls input {
+    width: 50px;
+    padding: 5px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Hide arrows in Chrome/Safari/Edge */
+.quantity-controls input::-webkit-outer-spin-button,
+.quantity-controls input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.quantity-controls button {
+    background-color: #f0f0f0;
+    color: #333;
+    border: 1px solid #ccc;
+    padding: 5px 12px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-weight: bold;
+    transition: background-color 0.2s;
+}
+
+.quantity-controls button:hover:not(:disabled) {
+    background-color: #ddd;
+}
+
+.quantity-controls button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+/* --- Subtotal and Remove --- */
+.cart-item-row > div:last-child {
+    text-align: right;
+    font-weight: bold;
+    color: #333;
+}
+
+.remove-btn {
+    background-color: transparent;
+    color: #dc3545; /* Red for removal */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin-left: 15px;
+    font-size: 0.9em;
+    transition: color 0.2s;
+}
+
+.remove-btn:hover {
+    color: #a71d2a;
+    text-decoration: underline;
+}
+
+/* --- Cart Summary --- */
+.cart-summary {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-top: 20px;
+    gap: 30px;
+}
+
+.cart-summary h3 {
+    font-size: 1.5em;
+    margin: 0;
+    color: #1a1a1a;
+}
+
+.checkout-btn {
+    background-color: #28a745; /* Green for success/checkout */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.checkout-btn:hover {
+    background-color: #1e7e34;
+}
+
+/* --- Responsive Adjustments --- */
+@media (max-width: 768px) {
+    .cart-page {
+        margin: 20px 10px;
+        padding: 15px;
+    }
+    
+    .cart-item-row {
+        /* Stack the columns vertically or use smaller columns */
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 10px;
+        padding: 15px;
+        border: 1px solid #f0f0f0;
+        border-radius: 6px;
+    }
+    
+    /* Move Item Details and Subtotal/Remove to the first row */
+    .cart-item-row > div:nth-child(1) { 
+        grid-column: 1 / 3; /* Span two columns */
+        text-align: left;
+    }
+    
+    /* Move Quantity Control to the second row left */
+    .quantity-controls {
+        grid-column: 1 / 2;
+        justify-content: flex-start;
+    }
+
+    /* Move Subtotal/Remove to the second row right */
+    .cart-item-row > div:last-child {
+        grid-column: 2 / 3;
+        text-align: right;
+    }
+    
+    .remove-btn {
+        margin-left: 0;
+        display: block;
+        margin-top: 5px;
+        float: right;
+    }
+    
+    .cart-summary {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 10px;
+    }
+    
+    .checkout-btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1.2em;
+    }
+}

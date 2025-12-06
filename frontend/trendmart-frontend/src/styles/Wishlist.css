@@ -1,0 +1,125 @@
+/* src/styles/Wishlist.css */
+
+/* Container */
+.wishlist-container {
+  padding-bottom: 50px;
+}
+
+/* Wishlist heading */
+.wishlist-container h2 {
+  font-weight: 600;
+  color: #333;
+}
+
+/* Wishlist empty message */
+.wishlist-container p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Wishlist items grid */
+.wishlist-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Individual card */
+.wishlist-card {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  background-color: #fff;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.wishlist-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Product image */
+.wishlist-card img {
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* Product info */
+.wishlist-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 15px;
+  flex-grow: 1;
+}
+
+/* Product name */
+.wishlist-info h5 {
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+  color: #333;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.wishlist-info h5:hover {
+  color: #007bff;
+}
+
+/* Product price and brand */
+.wishlist-info p {
+  margin: 0;
+  color: #666;
+  font-size: 0.875rem;
+}
+
+/* Remove button */
+.wishlist-card .btn-danger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 0.9rem;
+  transition: background-color 0.2s;
+}
+
+.wishlist-card .btn-danger:hover {
+  background-color: #c82333;
+}
+
+/* Responsive adjustments */
+@media (max-width: 991px) {
+  .wishlist-card {
+    flex-direction: row;
+  }
+}
+
+@media (max-width: 576px) {
+  .wishlist-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .wishlist-info {
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .wishlist-card img {
+    width: 100%;
+    height: auto;
+  }
+
+  .wishlist-card .btn-danger {
+    align-self: flex-end;
+    margin-top: 10px;
+  }
+}

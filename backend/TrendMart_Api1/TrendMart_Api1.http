@@ -1,0 +1,6 @@
+@TrendMart_Api1_HostAddress = http://localhost:5198
+
+GET {{TrendMart_Api1_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
