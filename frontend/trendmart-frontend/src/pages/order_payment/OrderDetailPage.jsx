@@ -79,15 +79,29 @@ const OrderDetailPage = () => {
     return exp.getTime() >= new Date().setHours(0,0,0,0);
   };
 
-  const validateCardForm = () => {
-    const errs = {};
-    if (!cardName.trim()) errs.name = 'Cardholder name is required';
-    if (cardNumber.length < 12 || cardNumber.length > 19 || !luhnCheck(cardNumber)) errs.number = 'Invalid card number'; 
-    if (!validateExpiry(cardExpiry)) errs.expiry = 'Invalid expiry (MM/YY) or card expired';
-    if (!/^\d{3,4}$/.test(cardCvv)) errs.cvv = 'CVV must be 3 or 4 digits';
-    setCardErrors(errs);
-    return Object.keys(errs).length === 0;
-  };
+const validateCardForm = () => {
+  const errs = {};
+
+  if (!cardName.trim()) {
+    errs.name = 'Cardholder name is required';
+  }
+
+  // ✅ Updated card number validation
+  if (!/^\d{10,19}$/.test(cardNumber)) {
+    errs.number = 'Card number must be between 10 and 19 digits';
+  }
+
+  if (!validateExpiry(cardExpiry)) {
+    errs.expiry = 'Invalid expiry (MM/YY) or card expired';
+  }
+
+  if (!/^\d{3,4}$/.test(cardCvv)) {
+    errs.cvv = 'CVV must be 3 or 4 digits';
+  }
+
+  setCardErrors(errs);
+  return Object.keys(errs).length === 0;
+};
 
   // ----------------- Payment Handlers -----------------
   const handleFakeUPIPay = async (e, paymentMethod = 'UPI') => {
@@ -350,16 +364,43 @@ const OrderDetailPage = () => {
               </div>
             </div>
 
-            {/* Buttons
-            <div className="form-actions">
-              <button type="button" className="btn btn-secondary" onClick={()=>setShowCardForm(false)} disabled={processing}>Cancel</button>
-              <button type="submit" className="btn btn-primary" disabled={processing}>{processing ? 'Processing...' : `Pay ₹${total.toFixed(2)}`}</button>
-              {/* Razorpay Button */}
-              {/* <button type="button" className="btn btn-success" onClick={handleRazorpayPayment} disabled={processing} style={{marginLeft:'10px'}}>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Razorpay-logo.png" alt="Razorpay" style={{height:'20px', marginRight:'5px'}} />
-                Pay with Razorpay
-              </button>
-            </div> */}
+          {/* Buttons */}
+<div className="form-actions">
+  <button
+    type="button"
+    className="btn btn-secondary"
+    onClick={() => setShowCardForm(false)}
+    disabled={processing}
+  >
+    Cancel
+  </button>
+
+  <button
+    type="submit"
+    className="btn btn-primary"
+    disabled={processing}
+  >
+    {processing ? 'Processing...' : `Pay ₹${total.toFixed(2)}`}
+  </button>
+
+  {/* Razorpay Button (optional) */}
+  {/* 
+  <button
+    type="button"
+    className="btn btn-success"
+    onClick={handleRazorpayPayment}
+    disabled={processing}
+    style={{ marginLeft: '10px' }}
+  >
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/2/2e/Razorpay-logo.png"
+      alt="Razorpay"
+      style={{ height: '20px', marginRight: '5px' }}
+    />
+    Pay with Razorpay
+  </button>
+  */}
+</div>
           </form>
         )}
         </div>
