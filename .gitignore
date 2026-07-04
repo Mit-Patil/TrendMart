@@ -10,8 +10,7 @@ backend/Trendmart_Api1/appsettings.json
 backend/TrendMart_Api1/.vs/
 
 # Uploaded files (user-generated content, not part of the repo)
-backend/TrendMart_Api1/wwwroot/profileImages/
-backend/TrendMart_Api1/wwwroot/uploads/
+backend/TrendMart_Api1/wwwroot/
 
 # Logs
 *.log
